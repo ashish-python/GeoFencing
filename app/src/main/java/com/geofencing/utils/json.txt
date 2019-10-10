@@ -1,0 +1,19 @@
+{
+  "geofences": [
+    {
+      "geofence_id": 645,
+      "latitude": 0,
+      "longitude": "cash",
+      "radius": 50
+      "geofence_name": "Home"
+    },
+    {
+      "geofence_id": 646,
+      "latitude": 0,
+      "longitude": "cash",
+      "radius": 100
+      "geofence_name": "Restaurant"
+    }
+  ],
+  "timestamp": "SUCCESS"
+}
