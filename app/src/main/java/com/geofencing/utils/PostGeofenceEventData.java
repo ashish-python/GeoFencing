@@ -15,8 +15,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class PostGeofenceEventData extends AsyncTask<String, Void, String> {
-
+public class PostGeofenceEventData extends AsyncTask<String, Void, String> { //AsyncTask<Params, Progress, Result>
+    //private String userId;
+    private String requestId;
+    public PostGeofenceEventData(String requestId){
+        //this.userId = userId;
+        this.requestId = requestId;
+    }
     @Override
     protected String doInBackground(String... strings) {
         String connStr="http://10.0.2.2:80/safechild/send_notification_to_parent.php";

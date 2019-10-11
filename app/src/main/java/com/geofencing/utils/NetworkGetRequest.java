@@ -40,7 +40,6 @@ public class NetworkGetRequest extends AsyncTask<String, Void, String> {
             try {
                 URL url = new URL(connStr);
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
-
                 http.setRequestMethod("GET");
                 http.setDoInput(true);
                 http.setDoOutput(true);

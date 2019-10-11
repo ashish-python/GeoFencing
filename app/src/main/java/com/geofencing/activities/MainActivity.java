@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geofencing.interfaces.GeofenceInterface;
+import com.geofencing.stores.PermissionStore;
 import com.geofencing.utils.NetworkGetRequest;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -72,21 +73,41 @@ public class MainActivity extends AppCompatActivity implements GeofenceInterface
         });
     }
 
+    //Check if the user has allowed location tracking
     private void checkLocationPermission() {
+        //location permission granted
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestLocationPermission();
-        } else {
+                == PackageManager.PERMISSION_GRANTED){
             syncGeofences();
+            return;
         }
+        //location permission never asked
+        PermissionStore.getInstance(getApplicationContext()).getLocationPermission();
+
+        /*
+        if (PermissionStore.getInstance(this).getLocationPermission() == null){
+            requestLocationPermission();
+        }
+        //location permission denied before
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            textViewMessage.setText(R.string.location_request_message);
+            buttonLocationPermission.setVisibility(View.VISIBLE);
+            PermissionStore.getInstance(this).setLocationPermission(false);
+        }
+        else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            textViewMessage.setText(R.string.location_do_not_show_again);
+            buttonLocationPermission.setVisibility(View.INVISIBLE);
+        }
+
+         */
     }
 
+    //Open location permission dialog
     private void requestLocationPermission() {
-        textViewMessage.setText(R.string.location_request_message);
-        buttonLocationPermission.setVisibility(View.VISIBLE);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
     }
 
+    //This method is called when the user denies or accepts location tracking
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_CODE) {
@@ -96,11 +117,14 @@ public class MainActivity extends AppCompatActivity implements GeofenceInterface
                 buttonLocationPermission.setVisibility(View.GONE);
                 syncGeofences();
             } else {
+                textViewMessage.setText(R.string.location_request_message);
+                buttonLocationPermission.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    //This method gets the list of geofences for the user from the database
     private void syncGeofences() {
         new NetworkGetRequest(this::addGeofences, GEOFENCES_LIST).execute("", "");
     }

@@ -4,5 +4,6 @@
     <string name="seek_permission">Share location</string>
     <string name="welcome_message">Thank you for sharing your location data with us. \n\nThis information can help you stay safe</string>
     <string name="location_request_message">The application cannot work if you do not share your location with us. Click the button below to grant location permission</string>
+    <string name="location_do_not_show_again">The application cannot work if you do not share your location with us. Please go to phone settings and enable location access for the Geofencing app</string>
     <string name="geofence_set_failure">Some error occurred. Please close the app and try again in some time</string>
 </resources>

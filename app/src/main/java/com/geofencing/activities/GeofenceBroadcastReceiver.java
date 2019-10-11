@@ -23,8 +23,8 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         if(geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT){
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
             for(Geofence geofence: triggeringGeofences){
-                Log.v("GEO_TRIGGER_TRIGGERED", geofence.toString());
-                new PostGeofenceEventData().execute("","");
+                String requestId = geofence.getRequestId();
+                new PostGeofenceEventData(requestId).execute("","");
             }
         }
     }
