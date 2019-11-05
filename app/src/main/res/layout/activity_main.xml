@@ -5,32 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple"
-    tools:context=".MainActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:id="@+id/button_permission"
-        android:text="@string/location_permission"
-        android:visibility="gone"
-        android:background="@drawable/primary_button_white"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_message"
-        android:layout_marginBottom="24dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/button_permission" />
+    tools:context="com.geofencing.activities.MainActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

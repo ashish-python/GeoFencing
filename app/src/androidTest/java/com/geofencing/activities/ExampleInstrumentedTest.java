@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ashish.geofencing", appContext.getPackageName());
+        assertEquals("com.geofencing", appContext.getPackageName());
     }
 }

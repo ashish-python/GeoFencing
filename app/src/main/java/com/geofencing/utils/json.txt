@@ -6,6 +6,7 @@
       "longitude": "cash",
       "radius": 50
       "geofence_name": "Home"
+      "timestamp": ""
     },
     {
       "geofence_id": 646,
@@ -13,7 +14,7 @@
       "longitude": "cash",
       "radius": 100
       "geofence_name": "Restaurant"
+      "timestamp": ""
     }
-  ],
-  "timestamp": "SUCCESS"
+  ]
 }

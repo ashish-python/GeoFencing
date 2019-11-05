@@ -35,7 +35,6 @@ public abstract class BaseStore {
     protected String getString(String key, String defaultValue){
         return sharedPreferences.getString(key, defaultValue);
     }
-
 }
 
 

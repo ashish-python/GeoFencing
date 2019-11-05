@@ -6,4 +6,10 @@
     <string name="location_request_message">The application cannot work if you do not share your location with us. Click the button below to grant location permission</string>
     <string name="location_do_not_show_again">The application cannot work if you do not share your location with us. Please go to phone settings and enable location access for the Geofencing app</string>
     <string name="geofence_set_failure">Some error occurred. Please close the app and try again in some time</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign out</string>
+    <string name="login_error">Username or password incorrect.\nPlease try again</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="child_phone">Child\'s phone number</string>
 </resources>

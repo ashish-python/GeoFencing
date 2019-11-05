@@ -4,6 +4,7 @@ import android.content.Context;
 
 public class PermissionStore extends BaseStore {
     private static String SHARED_PREFS = "permission";
+    private static String LOCATION_PERMISSION_ASKED_ONCE = "location_permission_asked_once";
     private static String LOCATION_PERMISSION = "location";
     private Context context;
     private static PermissionStore instance = null;
@@ -21,11 +22,19 @@ public class PermissionStore extends BaseStore {
         return instance;
     }
 
-    public Boolean getLocationPermission(){
-        return getBoolean(LOCATION_PERMISSION, null);
+    public Boolean getLocationPermissionAskedOnce(){
+        return getBoolean(LOCATION_PERMISSION_ASKED_ONCE, false);
     }
 
-    public void setLocationPermission(Boolean value){
-        savePair(LOCATION_PERMISSION, value);
+    public void setLocationPermissionAskedOnce(Boolean value){
+        savePair(LOCATION_PERMISSION_ASKED_ONCE, value);
+    }
+
+    public static String getLocationPermission() {
+        return LOCATION_PERMISSION;
+    }
+
+    public static void setLocationPermission(String locationPermission) {
+        LOCATION_PERMISSION = locationPermission;
     }
 }
