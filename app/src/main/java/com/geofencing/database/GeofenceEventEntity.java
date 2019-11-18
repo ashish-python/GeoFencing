@@ -1,5 +1,6 @@
 package com.geofencing.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,8 +9,9 @@ import com.geofencing.constants.Constants;
 
 @Entity (tableName = Constants.GEOFENCE_EVENT_ENTITY)
 public class GeofenceEventEntity {
-    @PrimaryKey (autoGenerate = true)
-    private int id;
+    @NonNull
+    @PrimaryKey
+    private String id;
     @ColumnInfo (name = "geofence_id")
     private String geofenceId;
     @ColumnInfo (name = "user_id")
@@ -22,11 +24,12 @@ public class GeofenceEventEntity {
     private float bearing;
     private double altitude;
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -6,9 +6,6 @@ import android.util.Log;
 
 import com.geofencing.constants.Constants;
 import com.geofencing.listeners.BaseListener;
-import com.geofencing.listeners.GeofenceListener;
-
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -45,26 +42,37 @@ public class NetworkPostRequest extends AsyncTask<String, Void, String> {
             try {
                 URL url = new URL(connStr);
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                http.setRequestMethod("GET");
+                http.setRequestMethod("POST");
                 http.setDoInput(true);
                 http.setDoOutput(true);
 
                 OutputStream ops = http.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(ops,"UTF-8"));
                 String data = "";
-                if (task == Constants.SAVE_LAST_KNOWN_LOCATION){
+                if (task == Constants.SAVE_LAST_KNOWN_LOCATION_TASK){
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&"
-                            + URLEncoder.encode("latitude","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8") + "&&"
-                            + URLEncoder.encode("longitude","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8") + "&&"
-                            + URLEncoder.encode("timestamp","UTF-8")+"="+URLEncoder.encode(strings[3],"UTF-8");
+                            + URLEncoder.encode("childFCMToken","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8") + "&&"
+                            + URLEncoder.encode("lastKnownLat","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8") + "&&"
+                            + URLEncoder.encode("lastKnownLng","UTF-8")+"="+URLEncoder.encode(strings[3],"UTF-8");
                 }
-                else if (task == Constants.SIGN_IN) {
+                else if (task == Constants.SIGN_IN_TASK) {
                     data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&"
                             + URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8") + "&&"
                             + URLEncoder.encode("childPhoneNumber","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8");
                 }
-                else if (task == Constants.GET_GEOFENCES){
+                else if (task == Constants.GET_GEOFENCES_TASK){
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8");
+                }
+                else if (task == Constants.CHILD_UPDATE_FCM_TOKEN_TASK) {
+                    Log.v("FCM_CHILD_ID", strings[1]);
+                    data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&" +
+                            URLEncoder.encode("fcmToken","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8");
+                }
+                else if (task == Constants.PUSH_NOTIFICATION_TO_PARENT_TASK) {
+                    Log.v("FCM_NOTIFICATION_GEOID", strings[1]);
+                    Log.v("FCM_NOTIFICATION_USER", strings[0]);
+                    data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&" +
+                            URLEncoder.encode("geofenceId","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8");
                 }
 
                 writer.write(data);
@@ -91,7 +99,6 @@ public class NetworkPostRequest extends AsyncTask<String, Void, String> {
                 Log.v("JSON_Exception2", e.toString());
                 return "IOException";
             }
-
             success = true;
             return result;
         }

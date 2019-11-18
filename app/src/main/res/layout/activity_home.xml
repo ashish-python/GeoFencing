@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/purple"
     tools:context="com.geofencing.activities.HomeActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerview"
+        android:layout_marginTop="100dp"
+        android:background="@color/colorAccent"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        android:visibility="gone" />
 
     <Button
         android:layout_width="wrap_content"

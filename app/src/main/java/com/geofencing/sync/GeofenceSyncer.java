@@ -9,11 +9,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.room.Room;
 
 import com.geofencing.activities.MainActivity;
 import com.geofencing.constants.Constants;
-import com.geofencing.database.EventsDatabase;
 import com.geofencing.listeners.BaseListener;
 import com.geofencing.receivers.GeofenceBroadcastReceiver;
 import com.geofencing.stores.TokenStore;
@@ -41,6 +39,7 @@ public class GeofenceSyncer implements BaseListener {
     private static int LOCATION_PERMISSION_CODE = 123;
     private static final String GEOFENCES_LIST = "geofence";
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static GeofencingClient geofencingClient;
 
     private GeofenceSyncer(Context context) {
         this.context = context;
@@ -55,7 +54,7 @@ public class GeofenceSyncer implements BaseListener {
 
     //Network request to get the list of geofences for the user from the backend
     public void syncGeofences() {
-        new NetworkPostRequest(context, Constants.GEOFENCE_URL, this::callback, Constants.GET_GEOFENCES).execute(TokenStore.getInstance(context).getUser());
+        new NetworkPostRequest(context, Constants.GEOFENCE_URL, this::callback, Constants.GET_GEOFENCES_TASK).execute(TokenStore.getInstance(context).getUser());
     }
 
     //Geofencing request with the list of all the geofences. This GeofencingRequest will be given to the Geofencing client to add geofences to the user's device
@@ -89,11 +88,16 @@ public class GeofenceSyncer implements BaseListener {
             @Override
             protected String doInBackground(String... strings) {
                 try {
-
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray array = jsonObject.getJSONArray("geofences");
+                    //We could check if the timestamp since the last update has changed - but for now we remove all the geofences
+                    //We should fix this in the next release
+                    geofencingClient = LocationServices.getGeofencingClient(context);
+                    removeGeofences();
+                    //JSONObject jsonObject = new JSONObject(json);
+                    //JSONArray array = jsonObject.getJSONArray("geofences");
+                    JSONArray array = new JSONArray(json);
                     //EventsDatabase eventsDatabase = Room.databaseBuilder(context, EventsDatabase.class, Constants.GEOFENCE_OBJECT_ENTITY).build();
                     for (int i = 0; i < array.length(); i++) {
+                        Log.v("FCM_GEO_NUM", String.valueOf(i + 1));
                         JSONObject obj = array.getJSONObject(i);
                         geofenceList.add(new Geofence.Builder()
                                 .setRequestId(obj.getString("geofenceId"))
@@ -102,7 +106,6 @@ public class GeofenceSyncer implements BaseListener {
                                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
                                 .build());
                     }
-                    GeofencingClient geofencingClient = LocationServices.getGeofencingClient(context);
 
                     geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -129,8 +132,8 @@ public class GeofenceSyncer implements BaseListener {
 
     }
 
-
-    private void deleteGeofence(String geofenceId){
-
+    private void removeGeofences(){
+        geofencingClient.removeGeofences(getGeofencePendingIntent());
+        Log.v("FCM_DELETE", "GEOFENCES_DELETED");
     }
 }

@@ -2,9 +2,7 @@ package com.geofencing.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.session.MediaSession;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -52,7 +50,7 @@ public class SignInActivity extends BaseAppCompatActivity implements BaseListene
     }
 
     private void signIn(String email, String password, String childPhone) {
-        new NetworkPostRequest(this, Constants.SIGN_IN_URL, this::callback, Constants.SIGN_IN).execute(email, password, childPhone);
+        new NetworkPostRequest(this, Constants.SIGN_IN_URL, this::callback, Constants.SIGN_IN_TASK).execute(email, password, childPhone);
     }
 
     @Override
@@ -67,7 +65,6 @@ public class SignInActivity extends BaseAppCompatActivity implements BaseListene
             TokenStore.getInstance(getApplicationContext()).setUser(responseString);
             startActivity(SignInActivity.this, MainActivity.class, FINISH_CURRENT_ACTIVITY);
         }
-        Log.v("FCM_RETURNED", responseString);
     }
 
     public void dismissKeyboard() {

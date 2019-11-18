@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.geofencing.constants.Constants;
 import com.geofencing.listeners.BaseListener;
+import com.geofencing.stores.TokenStore;
 import com.geofencing.utils.NetworkPostRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -72,7 +73,7 @@ public class MessagingService extends FirebaseMessagingService implements BaseLi
             // for Activity#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (!sendLocationData){
@@ -82,11 +83,11 @@ public class MessagingService extends FirebaseMessagingService implements BaseLi
                 else {
                     try{
                         Location l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        //Log.v("ACTION_LATITUDE: ", String.valueOf(location.getLatitude()));
-                        //Log.v("ACTION_LONGITUDE: ", String.valueOf(location.getLongitude()));
+                        Log.v("ACTION_LATITUDE: ", String.valueOf(location.getLatitude()));
+                        Log.v("ACTION_LONGITUDE: ", String.valueOf(location.getLongitude()));
                         String latitude = String.valueOf(location.getLatitude());
                         String longitude = String.valueOf(location.getLongitude());
-                        new NetworkPostRequest(MessagingService.this, Constants.LAST_KNOWN_LOCATION_URL, MessagingService.this::callback, Constants.SAVE_LAST_KNOWN_LOCATION).execute(latitude, longitude);
+                        new NetworkPostRequest(MessagingService.this, Constants.LAST_KNOWN_LOCATION_URL, MessagingService.this::callback, Constants.SAVE_LAST_KNOWN_LOCATION_TASK).execute(TokenStore.getInstance(getApplicationContext()).getUser(), TokenStore.getInstance(getApplicationContext()).getFCMToken(), latitude, longitude);
 
                     }
                     catch (SecurityException e){

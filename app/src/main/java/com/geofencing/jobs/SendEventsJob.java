@@ -11,10 +11,8 @@ public class SendEventsJob extends CustomJobService {
         return doJob();
     }
 
-    private boolean doJob(){
+    private boolean doJob() {
         Log.v("EVENT_STARTED", "EVENT STARTED");
-
-
         return true;
     }
 
