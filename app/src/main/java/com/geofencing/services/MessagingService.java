@@ -12,7 +12,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 import com.geofencing.listeners.BaseListener;
 import com.geofencing.stores.TokenStore;
 import com.geofencing.utils.NetworkPostRequest;
@@ -71,6 +71,7 @@ public class MessagingService extends FirebaseMessagingService implements BaseLi
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for Activity#requestPermissions for more details.
+            sendLocationData = false;
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0, new LocationListener() {
@@ -87,8 +88,7 @@ public class MessagingService extends FirebaseMessagingService implements BaseLi
                         Log.v("ACTION_LONGITUDE: ", String.valueOf(location.getLongitude()));
                         String latitude = String.valueOf(location.getLatitude());
                         String longitude = String.valueOf(location.getLongitude());
-                        new NetworkPostRequest(MessagingService.this, Constants.LAST_KNOWN_LOCATION_URL, MessagingService.this::callback, Constants.SAVE_LAST_KNOWN_LOCATION_TASK).execute(TokenStore.getInstance(getApplicationContext()).getUser(), TokenStore.getInstance(getApplicationContext()).getFCMToken(), latitude, longitude);
-
+                        new NetworkPostRequest(MessagingService.this, Endpoints.LAST_KNOWN_LOCATION_URL, MessagingService.this::callback, Endpoints.SAVE_LAST_KNOWN_LOCATION_TASK).execute(TokenStore.getInstance(getApplicationContext()).getUser(), TokenStore.getInstance(getApplicationContext()).getFCMToken(), latitude, longitude);
                     }
                     catch (SecurityException e){
                         locationManager.removeUpdates(this);

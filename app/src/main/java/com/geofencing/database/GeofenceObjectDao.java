@@ -5,7 +5,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ public interface GeofenceObjectDao {
     //endregion
 
     //region SELECT
-    @Query("SELECT * FROM " + Constants.GEOFENCE_OBJECT_ENTITY)
+    @Query("SELECT * FROM " + Endpoints.GEOFENCE_OBJECT_ENTITY)
     List<GeofenceObjectEntity> getAll();
 
-    @Query("SELECT  * FROM "+Constants.GEOFENCE_OBJECT_ENTITY+" WHERE geofence_id LIKE :geofenceId")
+    @Query("SELECT  * FROM "+ Endpoints.GEOFENCE_OBJECT_ENTITY+" WHERE geofence_id LIKE :geofenceId")
     List<GeofenceObjectEntity> getGeofence(String geofenceId);
     //endregion
 
     //region Delete
-    @Query("DELETE FROM "+Constants.GEOFENCE_OBJECT_ENTITY+" WHERE geofence_id LIKE :geofenceId")
+    @Query("DELETE FROM "+ Endpoints.GEOFENCE_OBJECT_ENTITY+" WHERE geofence_id LIKE :geofenceId")
     void deleteGeofence(String geofenceId);
 
-    @Query("DELETE FROM "+Constants.GEOFENCE_OBJECT_ENTITY)
+    @Query("DELETE FROM "+ Endpoints.GEOFENCE_OBJECT_ENTITY)
     void deleteAllGeofences();
     //endregion
 

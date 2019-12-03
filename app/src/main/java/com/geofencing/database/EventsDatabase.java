@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 
 @Database(entities = {GeofenceEventEntity.class, GeofenceObjectEntity.class}, version = 2, exportSchema = false)
 public abstract class EventsDatabase extends RoomDatabase {
@@ -15,7 +15,7 @@ public abstract class EventsDatabase extends RoomDatabase {
 
     public static EventsDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context, EventsDatabase.class, Constants.GEOFENCE_EVENT_ENTITY)
+            INSTANCE = Room.databaseBuilder(context, EventsDatabase.class, Endpoints.GEOFENCE_EVENT_ENTITY)
                     .fallbackToDestructiveMigration()
                     .build();
         }

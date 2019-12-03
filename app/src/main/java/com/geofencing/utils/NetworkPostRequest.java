@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 import com.geofencing.listeners.BaseListener;
 
 import java.io.BufferedReader;
@@ -49,30 +49,33 @@ public class NetworkPostRequest extends AsyncTask<String, Void, String> {
                 OutputStream ops = http.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(ops,"UTF-8"));
                 String data = "";
-                if (task == Constants.SAVE_LAST_KNOWN_LOCATION_TASK){
+                if (task == Endpoints.SAVE_LAST_KNOWN_LOCATION_TASK){
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&"
                             + URLEncoder.encode("childFCMToken","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8") + "&&"
                             + URLEncoder.encode("lastKnownLat","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8") + "&&"
                             + URLEncoder.encode("lastKnownLng","UTF-8")+"="+URLEncoder.encode(strings[3],"UTF-8");
                 }
-                else if (task == Constants.SIGN_IN_TASK) {
+                else if (task == Endpoints.SIGN_IN_TASK) {
                     data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&"
                             + URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8") + "&&"
                             + URLEncoder.encode("childPhoneNumber","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8");
                 }
-                else if (task == Constants.GET_GEOFENCES_TASK){
+                else if (task == Endpoints.GET_GEOFENCES_TASK){
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8");
                 }
-                else if (task == Constants.CHILD_UPDATE_FCM_TOKEN_TASK) {
+                else if (task == Endpoints.CHILD_UPDATE_FCM_TOKEN_TASK) {
                     Log.v("FCM_CHILD_ID", strings[1]);
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&" +
                             URLEncoder.encode("fcmToken","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8");
                 }
-                else if (task == Constants.PUSH_NOTIFICATION_TO_PARENT_TASK) {
+                else if (task == Endpoints.PUSH_NOTIFICATION_TO_PARENT_TASK) {
                     Log.v("FCM_NOTIFICATION_GEOID", strings[1]);
                     Log.v("FCM_NOTIFICATION_USER", strings[0]);
                     data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8") + "&&" +
                             URLEncoder.encode("geofenceId","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8");
+                }
+                else if (task == Endpoints.SEND_EVENT_DATA_TO_SERVER_TASK) {
+                    data = URLEncoder.encode("geofenceAlert","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8");
                 }
 
                 writer.write(data);
@@ -105,6 +108,7 @@ public class NetworkPostRequest extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String json) {
+        Log.v("FCM_SAVED_RETURN", json);
         if(success)
             callback.callback(context, status,json);
             success = false;

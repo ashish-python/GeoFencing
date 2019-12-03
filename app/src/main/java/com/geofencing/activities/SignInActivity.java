@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.geofencing.R;
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 import com.geofencing.listeners.BaseListener;
 import com.geofencing.stores.TokenStore;
 import com.geofencing.utils.NetworkPostRequest;
@@ -50,7 +50,7 @@ public class SignInActivity extends BaseAppCompatActivity implements BaseListene
     }
 
     private void signIn(String email, String password, String childPhone) {
-        new NetworkPostRequest(this, Constants.SIGN_IN_URL, this::callback, Constants.SIGN_IN_TASK).execute(email, password, childPhone);
+        new NetworkPostRequest(this, Endpoints.SIGN_IN_URL, this::callback, Endpoints.SIGN_IN_TASK).execute(email, password, childPhone);
     }
 
     @Override

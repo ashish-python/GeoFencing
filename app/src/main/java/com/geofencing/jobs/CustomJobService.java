@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.List;
 
 public abstract class CustomJobService extends JobService {
-    public static final int RUN_JOBS_DEFAULT_INTERVAL_IN_MILLIS = 15 * 60 * 1000; //15 minutes
+    public static final int RUN_JOBS_DEFAULT_INTERVAL_IN_MILLIS = 30 * 60 * 1000; //30 minutes
     protected JobParameters jobParameters;
 
     public static void cancelAll(Context context) {

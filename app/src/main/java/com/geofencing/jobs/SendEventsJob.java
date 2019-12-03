@@ -3,6 +3,8 @@ package com.geofencing.jobs;
 import android.app.job.JobParameters;
 import android.util.Log;
 
+import com.geofencing.sync.EventsSyncer;
+
 public class SendEventsJob extends CustomJobService {
 
     @Override
@@ -12,7 +14,7 @@ public class SendEventsJob extends CustomJobService {
     }
 
     private boolean doJob() {
-        Log.v("EVENT_STARTED", "EVENT STARTED");
+        EventsSyncer.getInstance(getApplicationContext()).syncGeofenceEvents();
         return true;
     }
 

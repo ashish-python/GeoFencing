@@ -8,13 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.geofencing.R;
 import com.geofencing.database.GeofenceEventEntity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GeofenceAdapter extends RecyclerView.Adapter<GeofenceAdapter.BaseViewHolder> {
     private ArrayList<GeofenceEventEntity> geofenceEventsList;

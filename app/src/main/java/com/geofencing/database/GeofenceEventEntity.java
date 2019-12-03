@@ -5,9 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.geofencing.constants.Constants;
+import com.geofencing.constants.Endpoints;
 
-@Entity (tableName = Constants.GEOFENCE_EVENT_ENTITY)
+@Entity (tableName = Endpoints.GEOFENCE_EVENT_ENTITY)
 public class GeofenceEventEntity {
     @NonNull
     @PrimaryKey

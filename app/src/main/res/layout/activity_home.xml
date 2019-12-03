@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/purple"
     tools:context="com.geofencing.activities.HomeActivity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerview"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorAccent"
-        android:padding="4dp"
-        android:scrollbars="vertical"
-        android:visibility="gone" />
 
     <Button
         android:layout_width="wrap_content"
@@ -43,16 +34,17 @@
         app:layout_constraintBottom_toTopOf="@id/button_permission" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/sign_out_tv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="62dp"
+        android:layout_height="22dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/sign_out"
         android:clickable="true"
         android:focusable="true"
-        android:textSize="22sp" />
+        android:text="@string/sign_out"
+        android:textSize="22sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
